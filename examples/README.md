@@ -2,13 +2,14 @@
 
 The `ballerinax/pipedrive` connector provides practical examples illustrating usage in various scenarios.
 
-[//]: # (TODO: Add examples)
-1. 
-2. 
+1. [Lead to deal onboarding](./lead_to_deal_onboarding/lead_to_deal_onboarding.md) - Create an organization and contact person, open a deal for them and schedule the first follow-up activity.
+2. [Pipeline deal summary](./pipeline_deal_summary/pipeline_deal_summary.md) - Summarise the open deals of every sales pipeline by stage, paging through all deals.
 
 ## Prerequisites
 
-[//]: # (TODO: Add prerequisites)
+1. A Pipedrive account and an API token. See [how to find your API token](https://pipedrive.readme.io/docs/how-to-find-the-api-token).
+
+2. A `Config.toml` file in the example directory with the values listed in the example's document.
 
 ## Running an example
 

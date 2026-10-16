@@ -4131,7 +4131,7 @@ paths:
           description: 'For pagination, the marker (an opaque string value) representing the first item on the next page'
       responses:
         '200':
-          description: Success
+          description: Search results for deals
           content:
             application/json:
               schema:
@@ -14699,7 +14699,7 @@ paths:
           description: 'For pagination, the marker (an opaque string value) representing the first item on the next page'
       responses:
         '200':
-          description: Success
+          description: Search results for products
           content:
             application/json:
               schema:
@@ -17188,7 +17188,7 @@ paths:
           description: 'For pagination, the marker (an opaque string value) representing the first item on the next page'
       responses:
         '200':
-          description: Success
+          description: Search results for leads
           content:
             application/json:
               schema:
@@ -17579,7 +17579,7 @@ paths:
           description: 'For pagination, the marker (an opaque string value) representing the first item on the next page'
       responses:
         '200':
-          description: Success
+          description: Search results for organizations
           content:
             application/json:
               schema:
@@ -17738,7 +17738,7 @@ paths:
           description: 'For pagination, the marker (an opaque string value) representing the first item on the next page'
       responses:
         '200':
-          description: Success
+          description: Search results for persons
           content:
             application/json:
               schema:
@@ -17942,7 +17942,7 @@ paths:
           description: 'For pagination, the marker (an opaque string value) representing the first item on the next page'
       responses:
         '200':
-          description: Success
+          description: Search results across the requested item types
           content:
             application/json:
               schema:
@@ -18173,7 +18173,7 @@ paths:
           description: 'For pagination, the marker (an opaque string value) representing the first item on the next page'
       responses:
         '200':
-          description: Success
+          description: Search results for the specified item field
           content:
             application/json:
               schema:
@@ -21390,7 +21390,7 @@ paths:
           description: 'For pagination, the marker (an opaque string value) representing the first item on the next page'
       responses:
         '200':
-          description: Success
+          description: Search results for projects
           content:
             application/json:
               schema:
