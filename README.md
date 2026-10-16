@@ -8,7 +8,7 @@
 
 [Pipedrive](https://www.pipedrive.com/) is a sales CRM and pipeline management platform that helps sales teams track leads, deals, contacts, activities and products through customizable sales pipelines.
 
-The Pipedrive connector offers APIs to connect and interact with the [Pipedrive API v2](https://developers.pipedrive.com/docs/api/v1) endpoints, specifically based on Pipedrive API v2.
+The Pipedrive connector offers APIs to connect and interact with the [Pipedrive API v2](https://pipedrive.readme.io/docs/pipedrive-api-v2) endpoints.
 
 ## Setup guide
 

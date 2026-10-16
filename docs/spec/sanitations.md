@@ -6,7 +6,7 @@ _Edition_: Swan Lake
 # Sanitation for OpenAPI specification
 
 This document records the sanitation done on top of the official OpenAPI specification from Pipedrive. 
-The OpenAPI specification is obtained from at [wso2/api-specs](https://github.com/wso2/api-specs/blob/main/openapi/pipedrive/pipedrive/2.0.0/openapi.yaml).
+The OpenAPI specification is obtained from [wso2/api-specs](https://github.com/wso2/api-specs/blob/main/openapi/pipedrive/pipedrive/2.0.0/openapi.yaml).
 These changes are done in order to improve the overall usability, and as workarounds for some known language limitations.
 
 1. Change `GetPersonFieldsResponseUiVisibilityShowInAddDealDialog order` to nullable

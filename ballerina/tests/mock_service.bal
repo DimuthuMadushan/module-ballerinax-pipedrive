@@ -72,7 +72,7 @@ service / on ep0 {
     # + include_fields - Optional comma separated string array of additional fields to include
     # + return - Get activity 
     resource function get activities/[int id](@http:Query {name: "include_fields"} ("attendees")[]? includeFields) returns UpsertActivityResponse {
-        return {success: true, data: {id: 101, subject: "Discovery call with Acme", 'type: "call", done: false, dueDate: "2026-11-02", dueTime: "10:30", ownerId: 12345, creatorUserId: 12345, dealId: 7, personId: 21, orgId: 31, note: "Discuss pricing", addTime: "2026-10-01T09:00:00Z", updateTime: "2026-10-01T09:00:00Z", isDeleted: false, busy: true, priority: 1}};
+        return {success: true, data: {id, subject: "Discovery call with Acme", 'type: "call", done: false, dueDate: "2026-11-02", dueTime: "10:30", ownerId: 12345, creatorUserId: 12345, dealId: 7, personId: 21, orgId: 31, note: "Discuss pricing", addTime: "2026-10-01T09:00:00Z", updateTime: "2026-10-01T09:00:00Z", isDeleted: false, busy: true, priority: 1}};
     }
 
     # Get all deals
@@ -109,7 +109,7 @@ service / on ep0 {
     # + includeLabels - When provided with 'true' value, response will include an array of label objects in the form of '{ id: number, label: string }'
     # + return - Get deal 
     resource function get deals/[int id](@http:Query {name: "include_fields"} ("next_activity_id"|"last_activity_id"|"first_won_time"|"products_count"|"files_count"|"notes_count"|"followers_count"|"email_messages_count"|"activities_count"|"done_activities_count"|"undone_activities_count"|"participants_count"|"last_incoming_mail_time"|"last_outgoing_mail_time"|"smart_bcc_email"|"source_lead_id")[]? includeFields, @http:Query {name: "custom_fields"} string[]? customFields, @http:Query {name: "include_option_labels"} boolean? includeOptionLabels, @http:Query {name: "include_labels"} boolean? includeLabels) returns UpsertDealResponse {
-        return {success: true, data: {id: 7, title: "Acme annual subscription", value: 15000, currency: "USD", ownerId: 12345, personId: 21, orgId: 31, pipelineId: 1, stageId: 3, status: "open", probability: 60, addTime: "2026-09-20T08:15:00Z", updateTime: "2026-10-05T11:42:00Z", expectedCloseDate: "2026-12-15", isDeleted: false, isArchived: false, visibleTo: 3, labelIds: [1, 2]}};
+        return {success: true, data: {id, title: "Acme annual subscription", value: 15000, currency: "USD", ownerId: 12345, personId: 21, orgId: 31, pipelineId: 1, stageId: 3, status: "open", probability: 60, addTime: "2026-09-20T08:15:00Z", updateTime: "2026-10-05T11:42:00Z", expectedCloseDate: "2026-12-15", isDeleted: false, isArchived: false, visibleTo: 3, labelIds: [1, 2]}};
     }
 
     # Search deals
@@ -157,7 +157,7 @@ service / on ep0 {
     # + includeLabels - When provided with 'true' value, response will include an array of label objects in the form of '{ id: number, label: string }'
     # + return - Get organization 
     resource function get organizations/[int id](@http:Query {name: "include_fields"} ("next_activity_id"|"last_activity_id"|"open_deals_count"|"related_open_deals_count"|"closed_deals_count"|"related_closed_deals_count"|"email_messages_count"|"people_count"|"activities_count"|"done_activities_count"|"undone_activities_count"|"files_count"|"notes_count"|"followers_count"|"won_deals_count"|"related_won_deals_count"|"lost_deals_count"|"related_lost_deals_count"|"smart_bcc_email")[]? includeFields, @http:Query {name: "custom_fields"} string[]? customFields, @http:Query {name: "include_option_labels"} boolean? includeOptionLabels, @http:Query {name: "include_labels"} boolean? includeLabels) returns UpsertOrganizationResponse {
-        return {success: true, data: {id: 31, name: "Acme Corporation", ownerId: 12345, website: "https://www.acme.example", addTime: "2026-08-01T06:00:00Z", updateTime: "2026-10-03T10:10:00Z", isDeleted: false, visibleTo: 3, labelIds: [2], employeeCount: 250}};
+        return {success: true, data: {id, name: "Acme Corporation", ownerId: 12345, website: "https://www.acme.example", addTime: "2026-08-01T06:00:00Z", updateTime: "2026-10-03T10:10:00Z", isDeleted: false, visibleTo: 3, labelIds: [2], employeeCount: 250}};
     }
 
     # Get all persons
@@ -191,7 +191,7 @@ service / on ep0 {
     # + includeLabels - When provided with 'true' value, response will include an array of label objects in the form of '{ id: number, label: string }'
     # + return - Get person 
     resource function get persons/[int id](@http:Query {name: "include_fields"} ("next_activity_id"|"last_activity_id"|"open_deals_count"|"related_open_deals_count"|"closed_deals_count"|"related_closed_deals_count"|"participant_open_deals_count"|"participant_closed_deals_count"|"email_messages_count"|"activities_count"|"done_activities_count"|"undone_activities_count"|"files_count"|"notes_count"|"followers_count"|"won_deals_count"|"related_won_deals_count"|"lost_deals_count"|"related_lost_deals_count"|"last_incoming_mail_time"|"last_outgoing_mail_time"|"marketing_status"|"doi_status"|"smart_bcc_email")[]? includeFields, @http:Query {name: "custom_fields"} string[]? customFields, @http:Query {name: "include_option_labels"} boolean? includeOptionLabels, @http:Query {name: "include_labels"} boolean? includeLabels) returns UpsertPersonResponse {
-        return {success: true, data: {id: 21, name: "Jane Doe", firstName: "Jane", lastName: "Doe", ownerId: 12345, orgId: 31, jobTitle: "Head of Procurement", addTime: "2026-08-14T07:30:00Z", updateTime: "2026-10-02T13:20:00Z", isDeleted: false, visibleTo: 3, labelIds: [4]}};
+        return {success: true, data: {id, name: "Jane Doe", firstName: "Jane", lastName: "Doe", ownerId: 12345, orgId: 31, jobTitle: "Head of Procurement", addTime: "2026-08-14T07:30:00Z", updateTime: "2026-10-02T13:20:00Z", isDeleted: false, visibleTo: 3, labelIds: [4]}};
     }
 
     # Get all pipelines

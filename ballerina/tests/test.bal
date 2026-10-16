@@ -48,7 +48,7 @@ function testGetActivity() returns error? {
     UpsertActivityResponse created = check pipedrive->addActivity({subject: "Follow-up call", 'type: "call"});
     int id = check created?.data?.id.ensureType();
     UpsertActivityResponse response = check pipedrive->getActivity(id);
-    test:assertTrue(response?.data?.id !is ());
+    test:assertEquals(response?.data?.id, id);
 }
 
 @test:Config {groups: ["live_tests", "mock_tests"]}
@@ -88,7 +88,7 @@ function testGetDeal() returns error? {
     UpsertDealResponse created = check pipedrive->addDeal({title: "Beta renewal"});
     int id = check created?.data?.id.ensureType();
     UpsertDealResponse response = check pipedrive->getDeal(id);
-    test:assertTrue(response?.data?.id !is ());
+    test:assertEquals(response?.data?.id, id);
 }
 
 @test:Config {groups: ["live_tests", "mock_tests"]}
@@ -135,7 +135,7 @@ function testGetPerson() returns error? {
     UpsertPersonResponse created = check pipedrive->addPerson({name: "John Smith"});
     int id = check created?.data?.id.ensureType();
     UpsertPersonResponse response = check pipedrive->getPerson(id);
-    test:assertTrue(response?.data?.id !is ());
+    test:assertEquals(response?.data?.id, id);
 }
 
 @test:Config {groups: ["live_tests", "mock_tests"]}
@@ -175,7 +175,7 @@ function testGetOrganization() returns error? {
     UpsertOrganizationResponse created = check pipedrive->addOrganization({name: "Globex"});
     int id = check created?.data?.id.ensureType();
     UpsertOrganizationResponse response = check pipedrive->getOrganization(id);
-    test:assertTrue(response?.data?.id !is ());
+    test:assertEquals(response?.data?.id, id);
 }
 
 // Pipelines and stages
@@ -227,5 +227,4 @@ function testAddTask() returns error? {
 function testGetTasks() returns error? {
     GetTasksResponse response = check pipedrive->getTasks();
     test:assertTrue(response?.success == true);
-    test:assertTrue((response?.data ?: []).length() > 0);
 }

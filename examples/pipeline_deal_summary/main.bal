@@ -9,9 +9,22 @@ configurable int pageSize = 100;
 public function main() returns error? {
     pipedrive:Client pipedrive = check new ({auth: {xApiToken: apiToken}});
 
-    // Step 1: list the pipelines
-    pipedrive:GetPipelinesResponse pipelines = check pipedrive->getPipelines();
-    pipedrive:GetPipelinesResponseData[] pipelineList = pipelines?.data ?: [];
+    // Step 1: page through the pipelines
+    pipedrive:GetPipelinesResponseData[] pipelineList = [];
+    string? pipelineCursor = ();
+    while true {
+        pipedrive:GetPipelinesQueries pipelineQueries = {'limit: pageSize};
+        if pipelineCursor is string {
+            pipelineQueries.cursor = pipelineCursor;
+        }
+        pipedrive:GetPipelinesResponse page = check pipedrive->getPipelines(queries = pipelineQueries);
+        pipedrive:GetPipelinesResponseData[] pipelines = page?.data ?: [];
+        pipelineList.push(...pipelines);
+        pipelineCursor = page?.additionalData?.nextCursor;
+        if pipelineCursor is () || pipelines.length() == 0 {
+            break;
+        }
+    }
     if pipelineList.length() == 0 {
         return error("No pipelines were returned for this account");
     }
@@ -20,12 +33,26 @@ public function main() returns error? {
         int pipelineId = check pipeline?.id.ensureType();
         io:println("Pipeline: ", pipeline?.name);
 
-        // Step 2: list the stages of the pipeline
-        pipedrive:GetStagesResponse stages = check pipedrive->getStages(queries = {pipelineId});
-        map<int> dealCounts = {};
-        map<decimal> dealValues = {};
+        // Step 2: page through the stages of the pipeline
+        pipedrive:StageItem[] stageList = [];
+        string? stageCursor = ();
+        while true {
+            pipedrive:GetStagesQueries stageQueries = {pipelineId, 'limit: pageSize};
+            if stageCursor is string {
+                stageQueries.cursor = stageCursor;
+            }
+            pipedrive:GetStagesResponse page = check pipedrive->getStages(queries = stageQueries);
+            pipedrive:StageItem[] stages = page?.data ?: [];
+            stageList.push(...stages);
+            stageCursor = page?.additionalData?.nextCursor;
+            if stageCursor is () || stages.length() == 0 {
+                break;
+            }
+        }
 
-        // Step 3: page through the open deals of the pipeline and aggregate them by stage
+        // Step 3: page through the open deals of the pipeline and aggregate them by stage and currency
+        map<int> dealCounts = {};
+        map<map<decimal>> dealValues = {};
         string? cursor = ();
         while true {
             pipedrive:GetDealsQueries dealQueries = {pipelineId, 'limit: pageSize};
@@ -40,7 +67,10 @@ public function main() returns error? {
                 }
                 string stageKey = (deal?.stageId ?: 0).toString();
                 dealCounts[stageKey] = (dealCounts[stageKey] ?: 0) + 1;
-                dealValues[stageKey] = (dealValues[stageKey] ?: 0d) + (deal?.value ?: 0d);
+                map<decimal> stageValues = dealValues[stageKey] ?: {};
+                string currency = deal?.currency ?: "unknown currency";
+                stageValues[currency] = (stageValues[currency] ?: 0d) + (deal?.value ?: 0d);
+                dealValues[stageKey] = stageValues;
             }
             cursor = page?.additionalData?.nextCursor;
             if cursor is () || deals.length() == 0 {
@@ -48,10 +78,12 @@ public function main() returns error? {
             }
         }
 
-        foreach pipedrive:StageItem stage in stages?.data ?: [] {
+        foreach pipedrive:StageItem stage in stageList {
             string stageKey = (stage?.id ?: 0).toString();
+            string[] totals = from [string, decimal] [currency, total] in (dealValues[stageKey] ?: {}).entries()
+                select string `${total} ${currency}`;
             io:println("  ", stage?.name, ": ", dealCounts[stageKey] ?: 0, " open deal(s), total value ",
-                    dealValues[stageKey] ?: 0d);
+                    totals.length() == 0 ? "0" : string:'join(", ", ...totals));
         }
     }
 }
